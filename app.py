@@ -8,9 +8,9 @@ model = pickle.load(open('breast_cancer_detector.pickle', 'rb'))
 
 @app.route('/')
 def home():
-    return render_template('index1.html')
+    return render_template('index.html', static_folder = 'static')
 
-@app.route('/predict',methods=['POST'])
+@app.route('/predict',methods=['GET','POST'])
 def predict():
     input_features = [float(x) for x in request.form.values()]
     features_value = [np.array(input_features)]
@@ -34,7 +34,7 @@ def predict():
         res_val = "no breast cancer"
         
 
-    return render_template('index1.html', prediction_text='Patient has {}'.format(res_val))
+    return render_template('index.html#result', static_folder = 'static', prediction_text='Patient has {}'.format(res_val))
 
 if __name__ == "__main__":
     app.run(debug=True)
